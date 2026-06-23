@@ -1,0 +1,31 @@
+Input matrix:
+[1,2;7,4]
+Expected Classical Result (Floats):
+[[1.  1.5 2.  2. ]
+ [4.  3.5 3.  3. ]
+ [7.  5.5 4.  4. ]
+ [7.  5.5 4.  4. ]]
+
+Expected Quantum Result (Integer Truncated):
+[[1 1 2 2]
+ [4 3 3 3]
+ [7 5 4 4]
+ [7 5 4 4]]
+
+F:\0_Abhay\B_Tech\Main_Mission\Research_Paper\Image_Processing\NEQR_Bilinear_Interpolation>
+[[1. 1. 2. 1.]
+ [4. 3. 3. 3.]
+ [7. 5. 4. 5.]
+ [4. 3. 3. 3.]] // Quantum Output
+
+Same image to 8x8:
+
+[[1. 1. 1. 1. 2. 1. 1. 1.]
+ [2. 2. 2. 2. 2. 2. 2. 2.]
+ [4. 3. 3. 3. 3. 3. 3. 3.]
+ [5. 5. 4. 4. 3. 4. 4. 5.]  || This particular row processed in quantum: [5. 15. 4. 10. 3. 10. 4. 15.]
+ [7. 6. 5. 4. 4. 4. 5. 6.]
+ [5. 5. 4. 4. 3. 4. 4. 5.]
+ [4. 3. 3. 3. 3. 3. 3. 3.]
+ [2. 2. 2. 2. 2. 2. 2. 2.]] // Classical
+
