@@ -26,16 +26,30 @@ def get_local_statevector(qc, qubit_tuple):
     return val
 
 
+# def save_circuit_snapshot(qc, i, folder="circuit_snapshots"):
+#     if not os.path.exists(folder):
+#         os.makedirs(folder)
+#     filename = os.path.join(folder, f"Pixel_{i}.png")
+    
+#     # No need to slice; the qc is already fresh
+#     fig = qc.draw(output='mpl', fold=40, scale=0.6)
+#     plt.title(f"Bilinear Interpolation: Pixel {i}")
+#     fig.savefig(filename)
+#     plt.close(fig) # Critical to prevent memory leaks in Matplotlib
+#     print("Circuit saved !")
+
 def save_circuit_snapshot(qc, i, folder="circuit_snapshots"):
     if not os.path.exists(folder):
         os.makedirs(folder)
     filename = os.path.join(folder, f"Pixel_{i}.png")
     
-    # No need to slice; the qc is already fresh
-    fig = qc.draw(output='mpl', fold=40, scale=0.6)
+    # idle_wires=False tells Qiskit to hide every qubit that hasn't received a gate yet
+    fig = qc.draw(output='mpl', fold=40, scale=0.6, idle_wires=False)
+    
     plt.title(f"Bilinear Interpolation: Pixel {i}")
-    fig.savefig(filename)
-    plt.close(fig) # Critical to prevent memory leaks in Matplotlib
+    fig.savefig(filename, bbox_inches='tight')
+    plt.close(fig) 
+    print(f"Circuit snapshot saved to {filename}!")
 
 def draw_circuit(qc, qubit_tuple=None):
     if qubit_tuple is None:

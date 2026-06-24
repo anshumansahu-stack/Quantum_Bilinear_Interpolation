@@ -2,6 +2,7 @@ import importlib
 import numpy as np
 from qiskit.circuit.library import QFTGate,PhaseGate
 bg=importlib.import_module("2_basic_gates")
+cm=importlib.import_module("4_circuit_methods")
 
 
 def U1(qc,qubits):
@@ -54,7 +55,7 @@ def PA(qc,X,Y,ancilla):
     RHA(qc,(Y[0],X[0],ancilla[0]))
     for i in range(1,n):
         RFA(qc,(ancilla[i-1],Y[i],X[i],ancilla[i]))
-    
+
     return qc,X
 
 def RHS(qc,qubits):
@@ -107,7 +108,7 @@ def PM(qc,X,Y,ancilla):
     total qubits that must be passed in the circuit: ((5n+1)*n//2)
     The measurement method in aersimulator to be used is matrix_product_state.
     '''
-    ## Passed state for 4 qubits:|0_0_0_0_y3_y2_y1_y0_x3_x2_x1_x0>
+    ## Passed state for 4 qubits:|0_0_0_0_y3_y2_y1_y0_x3_x2_x1_x0> Comment all the debug print statements later.
     n=len(X)
     ancillaCounter=0
     for i in range(n):
@@ -116,10 +117,11 @@ def PM(qc,X,Y,ancilla):
             ancillaCounter+=1
         if(i!=n-1):
             ancillaCounter+=i+1 ##This helps keep track of the current qubit.
+
     ## at the bottom of the circuit, now(n*n-1) qubits shall remain. now, 2*n+ancillaCounter qubits are filled with data.
     
     start,gap=0,1
-    addAncilla=(n//2)*((3*n)-1)
+    addAncilla=(n//2)*((3*n)-1) +20
     qc,finalTuple=PA(qc,ancilla[start:start+n],ancilla[start+n:start+(2*n)],ancilla[addAncilla:addAncilla+n])
     freq=n-2
     start=start+(2*n)+gap
@@ -134,6 +136,7 @@ def PM(qc,X,Y,ancilla):
         freq-=1
 
     # Add all inputs one by one. Apply all parallel adders and add the total result.
+
     return qc,finalTuple
 
 def LSH(qc,qubits,ancilla):

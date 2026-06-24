@@ -20,12 +20,12 @@ F:\0_Abhay\B_Tech\Main_Mission\Research_Paper\Image_Processing\NEQR_Bilinear_Int
 
 Same image to 8x8:
 
-[[1. 1. 1. 1. 2. 1. 1. 1.]
- [2. 2. 2. 2. 2. 2. 2. 2.]
- [4. 3. 3. 3. 3. 3. 3. 3.]
+[[1. 1. 1. 1. 2. 1. 1. 1.] // First Line prints Correct
+ [2. 2. 2. 2. 2. 2. 2. 2.] // Even index slip
+ [4. 3. 3. 3. 3. 3. 3. 3.] // Prints Correct
  [5. 5. 4. 4. 3. 4. 4. 5.]  || This particular row processed in quantum: [5. 15. 4. 10. 3. 10. 4. 15.]
- [7. 6. 5. 4. 4. 4. 5. 6.]
- [5. 5. 4. 4. 3. 4. 4. 5.]
- [4. 3. 3. 3. 3. 3. 3. 3.]
- [2. 2. 2. 2. 2. 2. 2. 2.]] // Classical
+ [7. 6. 5. 4. 4. 4. 5. 6.] //Prints Correct
+ [5. 5. 4. 4. 3. 4. 4. 5.] 
+ [4. 3. 3. 3. 3. 3. 3. 3.] //Prints Correct
+ [2. 2. 2. 2. 2. 2. 2. 2.]] // 
 
