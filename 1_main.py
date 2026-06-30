@@ -30,6 +30,7 @@ def build_circuit(original_shape, new_shape, gray_value, oracle_gate):
     total_qubits = (
         (5 * max_width**2) + (16 * max_width) + 4 * n + 2 * m +2*20
     )  # max_width extra for initialising value 2^2m for division at last, then required-4*n+n
+    print("total qubits used:",total_qubits)
     reset_per_calculation = (5 * max_width**2) + (4 * max_width) + 2 * n +2*20
 
     col = int(np.ceil(np.log2(original_shape[1])))  ## 1
@@ -45,7 +46,7 @@ def build_circuit(original_shape, new_shape, gray_value, oracle_gate):
 
     iterations = new_shape[0] * new_shape[1]  # Total number of times the loop is run
 
-    for i in range(0,1):  ## Just for testing purposes, only one iteration
+    for i in range(iterations):  ## Just for testing purposes, only one iteration
         qc = QuantumCircuit(total_qubits)
 
         bin_current = f"{i:0{coord_qubits}b}"  ## Binary value denoting the current position in the expanded array
@@ -63,7 +64,7 @@ def build_circuit(original_shape, new_shape, gray_value, oracle_gate):
             + reset_per_calculation
             + (4 * max_width)
         ]
-        for j in range(1):  ## Change to 4 after test
+        for j in range(4):  ## Change to 4 after test
 
             extra_qubits = coord_qubits + max_width  # 7
             curr_qubits = len(coord_qubit_tuple) + extra_qubits
@@ -109,8 +110,6 @@ def build_circuit(original_shape, new_shape, gray_value, oracle_gate):
             oracle_input_index = list(row_dest + col_dest + gray_value_tuple)
             qc.append(oracle_gate, oracle_input_index)
 
-            cm.save_circuit_snapshot(qc,i)
-            
             # print("Current color:")
             # cm.get_local_statevector(qc,color_index_tuple)
 
@@ -197,6 +196,7 @@ def build_circuit(original_shape, new_shape, gray_value, oracle_gate):
                 # print('SubC_x')
                 # cm.get_local_statevector(qc,SubC_x)
             ## Adding qubits for the parallel multiplier
+            # cm.save_custom_step(qc,"till_step_4")
             
             # print('resSubR')
             # cm.get_local_statevector(qc,resSubR)

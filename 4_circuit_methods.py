@@ -130,3 +130,35 @@ def add_qubits(qc, amount):
     new_qubits = [Qubit() for _ in range(amount)]
     qc.add_bits(new_qubits)  # total=11
     return qc
+
+def save_custom_step(qc, step_name, folder="circuit_snapshots"):
+    """
+    Saves the current state of the circuit to a PNG file.
+    Only displays qubits that have gates applied to them.
+    """
+    # 1. Ensure the directory exists
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    
+    # 2. Set the filename based on the provided step_name
+    filename = os.path.join(folder, f"{step_name}.png")
+    
+    # 3. Generate the figure
+    # idle_wires=False: removes wires with no gates
+    # fold: sets how many gates before wrapping to a new line (adjust as needed)
+    # scale: adjusts the size of the gates/text
+    try:
+        fig = qc.draw(output='mpl', idle_wires=False, fold=50, scale=0.7)
+        
+        # Optional: Add the step name as a title on the image
+        plt.title(f"Circuit Step: {step_name}")
+        
+        # 4. Save with tight layout to ensure no parts are cut off
+        fig.savefig(filename, bbox_inches='tight')
+        
+        # 5. VERY IMPORTANT: Close the figure to free up memory
+        plt.close(fig)
+        print(f"Circuit diagram saved: {filename}")
+        
+    except Exception as e:
+        print(f"Error saving {step_name}: {e}")
