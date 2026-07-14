@@ -1,15 +1,28 @@
 import numpy as np
 from qiskit import QuantumCircuit
+import math
 import importlib
 cg=importlib.import_module("3_circuit_gates")
 cm=importlib.import_module("4_circuit_methods")
 NE=importlib.import_module("6_neqr_encoding")
+IP=importlib.import_module("image_processing")
 
-## Row and Column labels must be Swapped!   ERROR UNRESOLVED
-image = np.array([[1, 2], [7, 4]])
-gray_value = 3
-old_shape = (2,2)
-new_shape = (4,4)
+## Row and Column labels must be Swapped!
+# image = np.array([[1, 2], [7, 4]]) ## Image Input
+image=IP.TIF_to_numpy("image_tests/Lenna_input_24.tif")
+max_pixel_value = np.max(image)
+
+# 2. Calculate the number of bits required to represent that value
+if max_pixel_value == 0:
+    gray_value = 1  # Guard to prevent invalid log(0) values
+else:
+    # We add 1 because values start from 0
+    # if max is 15, log2(16) = 4 bits
+    gray_value = int(math.ceil(math.log2(max_pixel_value + 1)))
+
+old_shape = image.shape
+print("initial Image Shape:",old_shape)
+new_shape = (16,16)
 
 # Storing the image in NEQR and then extracting the image from the same
 qc = NE.prepare_circuit(image, gray_value)
@@ -316,4 +329,10 @@ def build_circuit(original_shape, new_shape, gray_value, oracle_gate):
 build_circuit(old_shape, new_shape, gray_value, oracle_gate)
 
 result_2d = result_matrix.reshape(new_shape, order="C")  ## Row major format
-print(result_2d)
+
+IP.numpy_to_TIF(
+    result_2d=result_2d,
+    path='image_tests/output_image.tif'
+)
+
+## File successfully saved and OK message printed.

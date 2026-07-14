@@ -1,11 +1,14 @@
 from qiskit import QuantumCircuit, ClassicalRegister,QuantumRegister, transpile
 from qiskit_aer import AerSimulator
-import circuit_gates as cg
 from qiskit.quantum_info import Statevector
-import neqr_encoding as NEQR
-import neqr_encoding as NE
 import numpy as np
+from qiskit_aer import AerSimulator
+from qiskit import transpile
 
+import importlib
+cg=importlib.import_module("3_circuit_gates")
+cm=importlib.import_module("4_circuit_methods")
+NE=importlib.import_module("6_neqr_encoding")
 
 ## Test for Special Adding One Operation ==========================================
 
@@ -21,11 +24,6 @@ qc.x(2)
 
 # Apply U1
 qc = cg.U1(qc, [0,1,2,3])
-
-# Simulate
-from qiskit_aer import AerSimulator
-from qiskit import transpile
-
 simulator = AerSimulator(method='statevector')
 qc.measure_all()
 compiled = transpile(qc, simulator)

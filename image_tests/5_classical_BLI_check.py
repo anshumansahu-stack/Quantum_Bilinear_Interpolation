@@ -52,6 +52,6 @@ def classical_bilinear_wrapped(image, new_shape):
 
 # Test with 2x2 -> 8x8 (m will be 2)
 image = np.array([[1, 2], [7, 4]])
-res = classical_bilinear_wrapped(image, (8, 8))
+res = classical_bilinear_wrapped(image, (16, 16))
 print("Generalised Wrapping Result:")
 print(res)
